@@ -4,6 +4,28 @@
 
 #include <vec>
 
+
+#define ComponentType_schema(X,Y,...) \
+    enum_value_v(X,Y, NONE,           0) \
+    enum_value_v(X,Y, BYTE,           5120) \
+    enum_value_v(X,Y, UNSIGNED_BYTE,  5121) \
+    enum_value_v(X,Y, SHORT,          5122) \
+    enum_value_v(X,Y, UNSIGNED_SHORT, 5123) \
+    enum_value_v(X,Y, UNSIGNED_INT,   5125) \
+    enum_value_v(X,Y, FLOAT,          5126)
+declare_enum(ComponentType)
+
+#define CompoundType_schema(X,Y,...) \
+    enum_value_v(X,Y, NONE,           0) \
+    enum_value_v(X,Y, SCALAR,         1) \
+    enum_value_v(X,Y, VEC2,           2) \
+    enum_value_v(X,Y, VEC3,           3) \
+    enum_value_v(X,Y, VEC4,           4) \
+    enum_value_v(X,Y, MAT2,           5) \
+    enum_value_v(X,Y, MAT3,           6) \
+    enum_value_v(X,Y, MAT4,           7)
+declare_enum(CompoundType)
+
 #define TargetType_schema(X,Y,...) \
     enum_value_v(X,Y, NONE,           0) \
     enum_value_v(X,Y, ARRAY_BUFFER,   34962) \
@@ -164,6 +186,7 @@ declare_class(JData)
 #endif
 declare_class(Transform)
 
+typedef struct _Model* Model;
 typedef struct _Primitive* Primitive;
 #define Node_schema(X, Y,...) \
     i_prop(X, Y, public, array,             fields) \

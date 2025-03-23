@@ -1,5 +1,10 @@
 #include <import>
 
+void Buffer_init(Buffer b) {
+    vector    data = vector(b->uri);
+    b->data = data;
+}
+
 Node Model_find(Model a, cstr name) {
     each (a->nodes, Node, node)
         if (cmp(node->name, name) == 0)
@@ -271,12 +276,6 @@ define_class(Scene)
 define_class(AssetDesc)
 define_class(Buffer)
 define_class(Model)
-
-define_enum(Pixel)
-define_enum(Filter)
-define_enum(Polygon)
-define_enum(Asset)
-define_enum(Sampling)
 
 define_class(pbrMetallicRoughness)
 define_class(TextureInfo)

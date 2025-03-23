@@ -20,6 +20,7 @@ int main(int argc, cstr argv[]) {
     Model orbiter = read(gltf, typeid(Model));
 }
 ```
+this loads `orbiter.gltf` into a fully resolved `Model` class with access to nodes, skins, meshes, materials, etc.
 
 for more information, check out orbiter & trinity's use of this data; there we use a Vulkan subsystem.
 
@@ -33,5 +34,26 @@ mkdir build
 make -f ../Makefile
 ```
 
-This loads `orbiter.gltf` into a fully resolved `Model` class with access to nodes, skins, meshes, materials, etc.
+### using in your own A-type project (use-case: orbiter)
+### file: import
 
+```import
+A	https://github.com/ar-visions/A	main
+vec	https://github.com/ar-visions/vec	main
+gltf https://github.com/ar-visions/gltf main
+trinity	https://github.com/ar-visions/trinity	main
+
+app:
+	A vec gltf trinity
+	linux:
+		asound
+
+```
+
+we may debug any one of these modules by setting 'DBG' environment variable:
+```sh
+export DBG="*,gltf,trinity,*"
+export SRC="/home/user/src"
+```
+simply set to ones you wish to debug, and A-type import will compile for debug
+also useful to setup your SRC directory
