@@ -1,0 +1,462 @@
+
+#ifndef _GLTF_
+#define _GLTF_
+
+#include <vec>
+
+#define TargetType_schema(X,Y,...) \
+    enum_value_v(X,Y, NONE,           0) \
+    enum_value_v(X,Y, ARRAY_BUFFER,   34962) \
+    enum_value_v(X,Y, ELEMENT_BUFFER, 34963)
+declare_enum(TargetType)
+
+
+#define Mode_schema(X,Y,...) \
+    enum_value_v(X,Y, NONE,           0) \
+    enum_value_v(X,Y, LINES,          1) \
+    enum_value_v(X,Y, LINE_LOOP,      2) \
+    enum_value_v(X,Y, TRIANGLES,      4) \
+    enum_value_v(X,Y, TRIANGLE_STRIP, 5) \
+    enum_value_v(X,Y, TRIANGLE_FAN,   6) \
+    enum_value_v(X,Y, QUADS,          7)
+declare_enum(Mode)
+
+
+#define Interpolation_schema(X,Y,...) \
+    enum_value_v(X,Y, LINEAR,         0) \
+    enum_value_v(X,Y, STEP,           1) \
+    enum_value_v(X,Y, CUBICSPLINE,    2)
+declare_enum(Interpolation)
+
+
+#define Sampler_schema(X,Y,...) \
+    i_prop(X,Y, public, u64,            input) \
+    i_prop(X,Y, public, u64,            output) \
+    i_prop(X,Y, public, Interpolation,  interpolation)
+#ifndef Sampler_intern
+#define Sampler_intern
+#endif
+declare_class(Sampler)
+
+
+#define ChannelTarget_schema(X,Y,...) \
+    i_prop(X,Y, public, u64,            node) \
+    i_prop(X,Y, public, string,         path)
+#ifndef ChannelTarget_intern
+#define ChannelTarget_intern
+#endif
+declare_class(ChannelTarget)
+
+
+#define Channel_schema(X,Y,...) \
+    i_prop(X,Y, public, u64,            sampler) \
+    i_prop(X,Y, public, ChannelTarget,  target)
+#ifndef Channel_intern
+#define Channel_intern
+#endif
+declare_class(Channel)
+
+/// type-safe container declarations; needed for proper json serialization
+/// the Model is given in the definition, in .c file
+/// this merely forms a type alias with an additional type_t slot used at meta[0]
+/// meta types are merely types with an array of types filled at index
+
+
+typedef struct _array_Sampler* array_Sampler;
+
+#define Animation_schema(X,Y,...) \
+    i_prop(X,Y, public, string,         name) \
+    i_prop(X,Y, public, array_Sampler,  samplers)
+#ifndef Animation_intern
+#define Animation_intern
+#endif
+declare_class(Animation)
+
+
+#define SparseInfo_schema(X, Y,...) \
+    i_prop(X, Y, public, u64,           bufferView) \
+    i_prop(X, Y, public, ComponentType, componentType)
+#ifndef SparseInfo_intern
+#define SparseInfo_intern
+#endif
+declare_class(SparseInfo)
+
+
+#define Sparse_schema(X, Y,...) \
+    i_prop(X, Y, public, u64, count) \
+    i_prop(X, Y, public, SparseInfo,    indices) \
+    i_prop(X, Y, public, SparseInfo,    values)
+#ifndef Sparse_intern
+#define Sparse_intern
+#endif
+declare_class(Sparse)
+
+
+#define Accessor_schema(X, Y,...) \
+    i_prop(X, Y, public, bool,          normalized) \
+    i_prop(X, Y, public, u64,           bufferView) \
+    i_prop(X, Y, public, ComponentType, componentType) \
+    i_prop(X, Y, public, CompoundType,  type) \
+    i_prop(X, Y, public, u64,           count) \
+    i_prop(X, Y, public, vec3f,         min) \
+    i_prop(X, Y, public, vec3f,         max) \
+    i_prop(X, Y, public, Sparse,        sparse) \
+    i_prop(X, Y, public, u64,           stride) \
+    i_prop(X, Y, public, u64,           total_bytes) \
+    i_method(X, Y, public, u64,         vcount) \
+    i_method(X, Y, public, u64,         component_size) \
+    i_method(X, Y, public, AType,       member_type) \
+    i_override(X,Y, method, init)
+#ifndef Accessor_intern
+#define Accessor_intern
+#endif
+declare_class(Accessor)
+
+
+#define BufferView_schema(X, Y,...) \
+    i_prop(X, Y, public, u64, buffer) \
+    i_prop(X, Y, public, u64, byteLength) \
+    i_prop(X, Y, public, u64, byteOffset) \
+    i_prop(X, Y, public, TargetType, target)
+#ifndef BufferView_intern
+#define BufferView_intern
+#endif
+declare_class(BufferView)
+
+typedef struct _array_Transform* array_Transform;
+
+#define Skin_schema(X, Y,...) \
+    i_prop(X, Y, public, string, name) \
+    i_prop(X, Y, public, vector_i64, joints) \
+    i_prop(X, Y, public, i32,    inverseBindMatrices) \
+    i_prop(X, Y, public, object, extras) \
+    i_prop(X, Y, public, object, extensions)
+#ifndef Skin_intern
+#define Skin_intern
+#endif
+declare_class(Skin)
+
+
+#define JData_schema(X, Y,...) \
+    i_prop(X, Y, public, vector_mat4f,      states) \
+    i_prop(X, Y, public, array_Transform,   transforms) \
+    i_prop(X, Y, public, mat4f,             local)
+#ifndef JData_intern
+#define JData_intern
+#endif
+declare_class(JData)
+
+
+
+#define Transform_schema(X, Y,...) \
+    i_prop(X, Y, public, JData,             jdata) \
+    i_prop(X, Y, public, i32,               istate) \
+    i_prop(X, Y, public, mat4f,             local) \
+    i_prop(X, Y, public, mat4f,             local_default) \
+    i_prop(X, Y, public, i32,               iparent) \
+    i_prop(X, Y, public, vector_i64,        ichildren) \
+    i_method(X, Y, public, none, multiply,  mat4f) \
+    i_method(X, Y, public, none, set,       mat4f) \
+    i_method(X, Y, public, none, set_default) \
+    i_method(X, Y, public, none, propagate)
+#ifndef Transform_intern
+#define Transform_intern
+#endif
+declare_class(Transform)
+
+typedef struct _Primitive* Primitive;
+#define Node_schema(X, Y,...) \
+    i_prop(X, Y, public, array,             fields) \
+    i_prop(X, Y, public, string,            name) \
+    i_prop(X, Y, public, Node,              parent) \
+    i_prop(X, Y, public, i32,               skin) \
+    i_prop(X, Y, public, i32,               mesh) \
+    i_prop(X, Y, public, vec3f,             translation) \
+    i_prop(X, Y, public, quatf,             rotation) \
+    i_prop(X, Y, public, vec3f,             scale) \
+    i_prop(X, Y, public, vector_f32,        weights) \
+    i_prop(X, Y, public, vector_i64,        children) \
+    i_prop(X, Y, public, i32,               joint_index) \
+    i_prop(X, Y, public, bool,              processed) \
+    i_prop(X, Y, public, object,            mx_joints) \
+    i_method(X, Y, public, Primitive, primitive, Model, cstr)
+#ifndef Node_intern
+#define Node_intern
+#endif
+declare_class(Node)
+
+
+/// models need names on their primitives
+/// the json parser may error in this case (it doesnt, this is only used on init)
+#define Primitive_schema(X, Y,...) \
+    i_prop(X, Y, public, string,            name) \
+    i_prop(X, Y, public, map,               attributes) \
+    i_prop(X, Y, public, u64,               indices) \
+    i_prop(X, Y, public, i32,               material) \
+    i_prop(X, Y, public, Mode,              mode) \
+    i_prop(X, Y, public, array_map,         targets)
+#ifndef Primitive_intern
+#define Primitive_intern
+#endif
+declare_class(Primitive)
+
+
+#define MeshExtras_schema(X, Y,...) \
+    i_prop(X, Y, public, array_string,      target_names)
+#ifndef MeshExtras_intern
+#define MeshExtras_intern
+#endif
+declare_class(MeshExtras)
+
+
+typedef struct _array_Primitive* array_Primitive;
+
+#define Mesh_schema(X, Y,...) \
+    i_prop(X, Y, public, string,            name) \
+    i_prop(X, Y, public, array_Primitive,   primitives) \
+    i_prop(X, Y, public, vector_f32,        weights) \
+    i_prop(X, Y, public, MeshExtras,        extras) \
+    i_method(X, Y, public, Primitive, primitive, cstr)
+#ifndef Mesh_intern
+#define Mesh_intern
+#endif
+declare_class(Mesh)
+
+
+#define Scene_schema(X, Y,...) \
+    i_prop(X, Y, public, string,            name) \
+    i_prop(X, Y, public, vector_i64,        nodes)
+#ifndef Scene_intern
+#define Scene_intern
+#endif
+declare_class(Scene)
+
+
+#define AssetDesc_schema(X, Y,...) \
+    i_prop(X, Y, public, string,            generator) \
+    i_prop(X, Y, public, string,            copyright) \
+    i_prop(X, Y, public, string,            version)
+#ifndef AssetDesc_intern
+#define AssetDesc_intern
+#endif
+declare_class(AssetDesc)
+
+
+#define Buffer_schema(X, Y,...) \
+    i_prop(X, Y, public, u64,               byteLength) \
+    i_prop(X, Y, public, path,              uri) \
+    i_prop(X, Y, public, vector,            data) \
+    i_override(X, Y, method, init)
+#ifndef Buffer_intern
+#define Buffer_intern
+#endif
+declare_class(Buffer)
+
+typedef struct _array_Node*          array_Node;
+typedef struct _array_Skin*          array_Skin;
+typedef struct _array_Accessor*      array_Accessor;
+typedef struct _array_BufferView*    array_BufferView;
+typedef struct _array_Mesh*          array_Mesh;
+typedef struct _array_Buffer*        array_Buffer;
+typedef struct _array_Animation*     array_Animation;
+typedef struct _array_Scene*         array_Scene;
+typedef struct _array_Material*      array_Material;
+
+#define TextureInfo_schema(X, Y,...) \
+    i_prop  (X, Y, public, i64, index) \
+    i_prop  (X, Y, public, u32, texCoord) \
+    i_prop  (X, Y, public, f32, scale)
+#ifndef TextureInfo_intern
+#define TextureInfo_intern
+#endif
+declare_class(TextureInfo)
+
+/// we transfer material properties from here, in order to create small 2x2 placeholder textures
+#define pbrMetallicRoughness_schema(X, Y,...) \
+    /* Core PBR Properties */ \
+    i_prop  (X, Y, public, vec4f,       baseColorFactor) \
+    i_prop  (X, Y, public, TextureInfo, baseColorTexture) \
+    i_prop  (X, Y, public, f32,         metallicFactor) \
+    i_prop  (X, Y, public, f32,         roughnessFactor) \
+    i_prop  (X, Y, public, TextureInfo, metallicRoughnessTexture) \
+    i_prop  (X, Y, public, TextureInfo, normalTexture) \
+    i_prop  (X, Y, public, TextureInfo, occlusionTexture) \
+    i_prop  (X, Y, public, vec3f,       emissiveFactor) \
+    i_prop  (X, Y, public, TextureInfo, emissiveTexture) \
+    /* Specular Glossiness (KHR_materials_pbrSpecularGlossiness) */ \
+    i_prop  (X, Y, public, vec4f,       diffuseFactor) \
+    i_prop  (X, Y, public, vec3f,       specularFactor) \
+    i_prop  (X, Y, public, f32,         glossinessFactor) \
+    i_prop  (X, Y, public, TextureInfo, specularGlossinessTexture) \
+    /* Sheen (KHR_materials_sheen) */ \
+    i_prop  (X, Y, public, vec3f,       sheenColorFactor) \
+    i_prop  (X, Y, public, TextureInfo, sheenColorTexture) \
+    i_prop  (X, Y, public, f32,         sheenRoughnessFactor) \
+    i_prop  (X, Y, public, TextureInfo, sheenRoughnessTexture) \
+    /* Clear Coat (KHR_materials_clearcoat) */ \
+    i_prop  (X, Y, public, f32,         clearcoatFactor) \
+    i_prop  (X, Y, public, TextureInfo, clearcoatTexture) \
+    i_prop  (X, Y, public, f32,         clearcoatRoughnessFactor) \
+    i_prop  (X, Y, public, TextureInfo, clearcoatRoughnessTexture) \
+    i_prop  (X, Y, public, TextureInfo, clearcoatNormalTexture) \
+    /* Transmission (KHR_materials_transmission) */ \
+    i_prop  (X, Y, public, f32,         transmissionFactor) \
+    i_prop  (X, Y, public, TextureInfo, transmissionTexture) \
+    /* Volume (KHR_materials_volume) */ \
+    i_prop  (X, Y, public, f32,         thicknessFactor) \
+    i_prop  (X, Y, public, TextureInfo, thicknessTexture) \
+    i_prop  (X, Y, public, vec3f,       attenuationColor) \
+    i_prop  (X, Y, public, f32,         attenuationDistance) \
+    /* Index of Refraction (KHR_materials_ior) */ \
+    i_prop  (X, Y, public, f32,         ior) \
+    /* Specular (KHR_materials_specular) */ \
+    i_prop  (X, Y, public, TextureInfo, specularTexture) \
+    i_prop  (X, Y, public, vec3f,       specularColorFactor) \
+    i_prop  (X, Y, public, TextureInfo, specularColorTexture) \
+    /* Emissive Strength (KHR_materials_emissive_strength) */ \
+    i_prop  (X, Y, public, f32,         emissiveStrength) \
+    /* Iridescence (KHR_materials_iridescence) */ \
+    i_prop  (X, Y, public, f32,         iridescenceFactor) \
+    i_prop  (X, Y, public, TextureInfo, iridescenceTexture) \
+    i_prop  (X, Y, public, f32,         iridescenceIor) \
+    i_prop  (X, Y, public, f32,         iridescenceThicknessMinimum) \
+    i_prop  (X, Y, public, f32,         iridescenceThicknessMaximum)
+
+#ifndef pbrMetallicRoughness_intern
+#define pbrMetallicRoughness_intern
+#endif
+declare_class(pbrMetallicRoughness)
+
+#define Material_schema(X, Y,...) \
+    i_prop  (X, Y, public, string,      name) \
+    i_prop  (X, Y, public, pbrMetallicRoughness, pbr, field, pbrMetallicRoughness) \
+    i_prop  (X, Y, public, TextureInfo, normalTexture) \
+    i_prop  (X, Y, public, TextureInfo, occlusionTexture) \
+    i_prop  (X, Y, public, TextureInfo, emissiveTexture) \
+    i_prop  (X, Y, public, vec3f,       emissiveFactor) \
+    i_prop  (X, Y, public, string,      alphaMode) \
+    i_prop  (X, Y, public, f32,         alphaCutoff) \
+    i_prop  (X, Y, public, bool,        doubleSided)
+#ifndef Material_intern
+#define Material_intern
+#endif
+declare_class(Material)
+
+
+#define Model_schema(X, Y,...) \
+    i_prop  (X, Y, public, array_Node,      nodes) \
+    i_prop  (X, Y, public, array_Skin,      skins) \
+    i_prop  (X, Y, public, array_Accessor,  accessors) \
+    i_prop  (X, Y, public, array_BufferView, bufferViews) \
+    i_prop  (X, Y, public, array_Mesh,      meshes) \
+    i_prop  (X, Y, public, array_Buffer,    buffers) \
+    i_prop  (X, Y, public, array_Animation, animations) \
+    i_prop  (X, Y, public, array_Scene,     scenes) \
+    i_prop  (X, Y, public, array_Material,  materials) \
+    i_prop  (X, Y, public, u64,             scene) \
+    i_prop  (X, Y, public, AssetDesc,       asset) \
+    i_method(X, Y, public, Transform,       node_transform, JData, mat4f, i32, Transform) \
+    i_method(X, Y, public, Node,            find,     cstr) \
+    i_method(X, Y, public, i32,             index_of, cstr) \
+    i_index (X, Y, public, Node,            string) \
+    i_method(X, Y, public, JData,           joints, Node)
+#ifndef Model_intern
+#define Model_intern
+#endif
+declare_class(Model)
+
+
+#define Polygon_schema(X, Y,...) \
+    enum_value_v(X, Y, undefined, 0) \
+    enum_value_v(X, Y, tri, 1) \
+    enum_value_v(X, Y, quad, 2) \
+    enum_value_v(X, Y, wire, 3) \
+    enum_value_v(X, Y, mixed, 4) \
+    enum_value_v(X, Y, ngon, 5)
+declare_enum(Polygon)
+
+
+#define Asset_schema(X, Y,...) \
+    enum_value_v(X, Y, undefined, 0) \
+    enum_value_v(X, Y, color, 1) \
+    enum_value_v(X, Y, normal, 2) \
+    enum_value_v(X, Y, material, 3) \
+    enum_value_v(X, Y, reflect, 4) \
+    enum_value_v(X, Y, env, 5) \
+    enum_value_v(X, Y, attachment, 6) \
+    enum_value_v(X, Y, depth_stencil, 7) \
+    enum_value_v(X, Y, multisample, 8)
+declare_enum(Asset)
+
+
+#define Sampling_schema(X, Y,...) \
+    enum_value_v(X, Y, undefined, 0) \
+    enum_value_v(X, Y, nearest, 1) \
+    enum_value_v(X, Y, linear, 2) \
+    enum_value_v(X, Y, ansio, 3)
+declare_enum(Sampling)
+
+
+/// this is an example Vertex I used prior, in C++ code and then converted to C
+/// we want to design a vertex for hinge.gltf
+#define HumanVertex_schema(X, Y,...) \
+    i_prop(X, Y, public, vec3f, pos)         \
+    i_prop(X, Y, public, vec3f, normal)      \
+    i_prop(X, Y, public, vec2f, uv0)         \
+    i_prop(X, Y, public, vec2f, uv1)         \
+    i_prop(X, Y, public, vec3f, tangent)     \
+    i_prop(X, Y, public, vec3f, joints0)     \
+    i_prop(X, Y, public, vec3f, joints1)     \
+    i_prop(X, Y, public, vec3f, weights0)    \
+    i_prop(X, Y, public, vec3f, weights1)
+#ifndef HumanVertex_intern
+#define HumanVertex_intern
+#endif
+declare_struct(HumanVertex)
+
+
+/*
+#define Transform_schema(X,Y,...)
+#define Sampler_schema(X,Y,...)
+#define Channel_schema(X,Y,...)
+#define Primitive_schema(X,Y,...)
+#define Node_schema(X,Y,...)
+#define Skin_schema(X,Y,...)
+#define Accessor_schema(X,Y,...)
+#define BufferView_schema(X,Y,...)
+#define Mesh_schema(X,Y,...)
+#define Scene_schema(X,Y,...)
+#define Material_schema(X,Y,...)
+#define Buffer_schema(X,Y,...)
+#define Animation_schema(X,Y,...)
+*/
+
+#define array_Transform_schema(X,Y,...)
+#define array_Sampler_schema(X,Y,...)
+#define array_Channel_schema(X,Y,...)
+#define array_Primitive_schema(X,Y,...)
+#define array_Node_schema(X,Y,...)
+#define array_Skin_schema(X,Y,...)
+#define array_Accessor_schema(X,Y,...)
+#define array_BufferView_schema(X,Y,...)
+#define array_Mesh_schema(X,Y,...)
+#define array_Scene_schema(X,Y,...)
+#define array_Material_schema(X,Y,...)
+#define array_Buffer_schema(X,Y,...)
+#define array_Animation_schema(X,Y,...)
+
+declare_meta(array_Transform,  array, Transform)
+declare_meta(array_Sampler,    array, Sampler)
+declare_meta(array_Channel,    array, Channel)
+declare_meta(array_Primitive,  array, Primitive)
+declare_meta(array_Node,       array, Node)
+declare_meta(array_Skin,       array, Skin)
+declare_meta(array_Accessor,   array, Accessor)
+declare_meta(array_BufferView, array, BufferView)
+declare_meta(array_Mesh,       array, Mesh)
+declare_meta(array_Scene,      array, Scene)
+declare_meta(array_Material,   array, Material)
+declare_meta(array_Buffer,     array, Buffer)
+declare_meta(array_Animation,  array, Animation)
+
+#endif
