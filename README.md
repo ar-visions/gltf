@@ -39,7 +39,8 @@ mkdir build
 make -f ../Makefile
 ```
 
-### 🚀 setting up our import file for your own A-type project (use-case: orbiter)
+### 🚀 setting up import for your own A-type project (use-case: orbiter)
+file: import
 
 ```import
 A	https://github.com/ar-visions/A	main
@@ -53,7 +54,6 @@ app:
 		asound
 
 ```
-
 we may debug any one of these modules by setting 'DBG' environment variable:
 ```sh
 export DBG="*,gltf,trinity,*"
@@ -61,3 +61,13 @@ export SRC="/home/user/src"
 ```
 simply set to ones you wish to debug, and A-type import will compile for debug ... 
 also useful to setup your SRC directory so import may look here and symlink rather than checkout git ... this A-type import pattern improves general software development practices for all libraries.
+
+### 📂 create app/lib folder in your app/lib repo, with the following Makefile:
+file: Makefile
+
+```Makefile
+PROJECT := your_project
+REL := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+include $(REL)../A/build.mk
+```
+as stated above, we merely need to add .c files to an app or lib folder.  A-type builds app or lib based on these directories and files within.  only 1 library is built per project, but any number of app modules may be made.
