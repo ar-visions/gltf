@@ -54,12 +54,19 @@ app:
 		asound
 
 ```
-we may debug any one of these modules by setting 'DBG' environment variable:
+
+### 🔧 environment setup
 ```sh
+# the place where we install software, lib/include/bin/etc
+export IMPORT="/home/user/src/import"
+
+# list of project names we wish to debug (any external library)
 export DBG="*,gltf,trinity,*"
+
+# our source directory where we have our own/external projects
 export SRC="/home/user/src"
 ```
-simply set to ones you wish to debug, and A-type import will compile for debug ... 
+
 also useful to setup your SRC directory so import may look here and symlink rather than checkout git ... this A-type import pattern improves general software development practices for all libraries.
 
 ### 📂 create app/lib folder in your app/lib repo, with the following Makefile:
@@ -70,4 +77,4 @@ PROJECT := your_project
 REL := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 include $(REL)../A/build.mk
 ```
-as stated above, we merely need to add .c files to an app or lib folder.  A-type builds app or lib based on these directories and files within.  only 1 library is built per project, but any number of app modules may be made.
+as stated above, we add your_app.c / .cc (C++ support is there, albeit with more casting: see image.cc in trinity) to an app or lib folder.  A-type builds app or lib based on these directories and files within.  only 1 library is built per project, but any number of app modules may be made.
