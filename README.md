@@ -22,7 +22,12 @@ int main(int argc, cstr argv[]) {
 ```
 this loads `orbiter.gltf` into a fully resolved `Model` class with access to nodes, skins, meshes, materials, etc.
 
-for more information, check out orbiter & trinity's use of this data; there we use a Vulkan subsystem.
+for more information, check out orbiter & trinity's use of this object; there we use a Vulkan subsystem to render this model.
+
+whatever object we define, we may serialize in and out of json. 'Model' is simply one case of this
+
+A-type is a general object model capable of being a very node-like experience for C.  it is a meta
+object model capable of high performance reflection in C, and uniquely capable of modern development.
 
 ### 📦 building (identical for all C-based, A-type libraries)
 
@@ -34,8 +39,7 @@ mkdir build
 make -f ../Makefile
 ```
 
-### using in your own A-type project (use-case: orbiter)
-### file: import
+### 🚀 setting up our import file for your own A-type project (use-case: orbiter)
 
 ```import
 A	https://github.com/ar-visions/A	main
