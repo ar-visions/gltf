@@ -59,5 +59,5 @@ we may debug any one of these modules by setting 'DBG' environment variable:
 export DBG="*,gltf,trinity,*"
 export SRC="/home/user/src"
 ```
-simply set to ones you wish to debug, and A-type import will compile for debug
-also useful to setup your SRC directory
+simply set to ones you wish to debug, and A-type import will compile for debug ... 
+also useful to setup your SRC directory so import may look here and symlink rather than checkout git ... this A-type import pattern improves general software development practices for all libraries.
