@@ -55,27 +55,18 @@ declare_enum(Interpolation)
     i_prop(X,Y, public, u64,            input) \
     i_prop(X,Y, public, u64,            output) \
     i_prop(X,Y, public, Interpolation,  interpolation)
-#ifndef Sampler_intern
-#define Sampler_intern
-#endif
 declare_class(Sampler)
 
 
 #define ChannelTarget_schema(X,Y,...) \
     i_prop(X,Y, public, u64,            node) \
     i_prop(X,Y, public, string,         path)
-#ifndef ChannelTarget_intern
-#define ChannelTarget_intern
-#endif
 declare_class(ChannelTarget)
 
 
 #define Channel_schema(X,Y,...) \
     i_prop(X,Y, public, u64,            sampler) \
     i_prop(X,Y, public, ChannelTarget,  target)
-#ifndef Channel_intern
-#define Channel_intern
-#endif
 declare_class(Channel)
 
 /// type-safe container declarations; needed for proper json serialization
@@ -89,18 +80,12 @@ typedef struct _array_Sampler* array_Sampler;
 #define Animation_schema(X,Y,...) \
     i_prop(X,Y, public, string,         name) \
     i_prop(X,Y, public, array_Sampler,  samplers)
-#ifndef Animation_intern
-#define Animation_intern
-#endif
 declare_class(Animation)
 
 
 #define SparseInfo_schema(X, Y,...) \
     i_prop(X, Y, public, u64,           bufferView) \
     i_prop(X, Y, public, ComponentType, componentType)
-#ifndef SparseInfo_intern
-#define SparseInfo_intern
-#endif
 declare_class(SparseInfo)
 
 
@@ -108,9 +93,6 @@ declare_class(SparseInfo)
     i_prop(X, Y, public, u64, count) \
     i_prop(X, Y, public, SparseInfo,    indices) \
     i_prop(X, Y, public, SparseInfo,    values)
-#ifndef Sparse_intern
-#define Sparse_intern
-#endif
 declare_class(Sparse)
 
 
@@ -129,9 +111,6 @@ declare_class(Sparse)
     i_method(X, Y, public, u64,         component_size) \
     i_method(X, Y, public, AType,       member_type) \
     i_override(X,Y, method, init)
-#ifndef Accessor_intern
-#define Accessor_intern
-#endif
 declare_class(Accessor)
 
 
@@ -140,9 +119,6 @@ declare_class(Accessor)
     i_prop(X, Y, public, u64, byteLength) \
     i_prop(X, Y, public, u64, byteOffset) \
     i_prop(X, Y, public, TargetType, target)
-#ifndef BufferView_intern
-#define BufferView_intern
-#endif
 declare_class(BufferView)
 
 typedef struct _array_Transform* array_Transform;
@@ -153,9 +129,6 @@ typedef struct _array_Transform* array_Transform;
     i_prop(X, Y, public, i32,    inverseBindMatrices) \
     i_prop(X, Y, public, object, extras) \
     i_prop(X, Y, public, object, extensions)
-#ifndef Skin_intern
-#define Skin_intern
-#endif
 declare_class(Skin)
 
 
@@ -163,9 +136,6 @@ declare_class(Skin)
     i_prop(X, Y, public, vector_mat4f,      states) \
     i_prop(X, Y, public, array_Transform,   transforms) \
     i_prop(X, Y, public, mat4f,             local)
-#ifndef JData_intern
-#define JData_intern
-#endif
 declare_class(JData)
 
 
@@ -181,9 +151,6 @@ declare_class(JData)
     i_method(X, Y, public, none, set,       mat4f) \
     i_method(X, Y, public, none, set_default) \
     i_method(X, Y, public, none, propagate)
-#ifndef Transform_intern
-#define Transform_intern
-#endif
 declare_class(Transform)
 
 typedef struct _Model* Model;
@@ -203,9 +170,6 @@ typedef struct _Primitive* Primitive;
     i_prop(X, Y, public, bool,              processed) \
     i_prop(X, Y, public, object,            mx_joints) \
     i_method(X, Y, public, Primitive, primitive, Model, cstr)
-#ifndef Node_intern
-#define Node_intern
-#endif
 declare_class(Node)
 
 
@@ -218,17 +182,11 @@ declare_class(Node)
     i_prop(X, Y, public, i32,               material) \
     i_prop(X, Y, public, Mode,              mode) \
     i_prop(X, Y, public, array_map,         targets)
-#ifndef Primitive_intern
-#define Primitive_intern
-#endif
 declare_class(Primitive)
 
 
 #define MeshExtras_schema(X, Y,...) \
     i_prop(X, Y, public, array_string,      target_names)
-#ifndef MeshExtras_intern
-#define MeshExtras_intern
-#endif
 declare_class(MeshExtras)
 
 
@@ -240,18 +198,12 @@ typedef struct _array_Primitive* array_Primitive;
     i_prop(X, Y, public, vector_f32,        weights) \
     i_prop(X, Y, public, MeshExtras,        extras) \
     i_method(X, Y, public, Primitive, primitive, cstr)
-#ifndef Mesh_intern
-#define Mesh_intern
-#endif
 declare_class(Mesh)
 
 
 #define Scene_schema(X, Y,...) \
     i_prop(X, Y, public, string,            name) \
     i_prop(X, Y, public, vector_i64,        nodes)
-#ifndef Scene_intern
-#define Scene_intern
-#endif
 declare_class(Scene)
 
 
@@ -259,9 +211,6 @@ declare_class(Scene)
     i_prop(X, Y, public, string,            generator) \
     i_prop(X, Y, public, string,            copyright) \
     i_prop(X, Y, public, string,            version)
-#ifndef AssetDesc_intern
-#define AssetDesc_intern
-#endif
 declare_class(AssetDesc)
 
 
@@ -270,9 +219,6 @@ declare_class(AssetDesc)
     i_prop(X, Y, public, path,              uri) \
     i_prop(X, Y, public, vector,            data) \
     i_override(X, Y, method, init)
-#ifndef Buffer_intern
-#define Buffer_intern
-#endif
 declare_class(Buffer)
 
 typedef struct _array_Node*          array_Node;
@@ -289,9 +235,6 @@ typedef struct _array_Material*      array_Material;
     i_prop  (X, Y, public, i64, index) \
     i_prop  (X, Y, public, u32, texCoord) \
     i_prop  (X, Y, public, f32, scale)
-#ifndef TextureInfo_intern
-#define TextureInfo_intern
-#endif
 declare_class(TextureInfo)
 
 /// we transfer material properties from here, in order to create small 2x2 placeholder textures
@@ -345,9 +288,6 @@ declare_class(TextureInfo)
     i_prop  (X, Y, public, f32,         iridescenceThicknessMinimum) \
     i_prop  (X, Y, public, f32,         iridescenceThicknessMaximum)
 
-#ifndef pbrMetallicRoughness_intern
-#define pbrMetallicRoughness_intern
-#endif
 declare_class(pbrMetallicRoughness)
 
 #define Material_schema(X, Y,...) \
@@ -360,9 +300,6 @@ declare_class(pbrMetallicRoughness)
     i_prop  (X, Y, public, string,      alphaMode) \
     i_prop  (X, Y, public, f32,         alphaCutoff) \
     i_prop  (X, Y, public, bool,        doubleSided)
-#ifndef Material_intern
-#define Material_intern
-#endif
 declare_class(Material)
 
 
@@ -383,9 +320,6 @@ declare_class(Material)
     i_method(X, Y, public, i32,             index_of, cstr) \
     i_index (X, Y, public, Node,            string) \
     i_method(X, Y, public, JData,           joints, Node)
-#ifndef Model_intern
-#define Model_intern
-#endif
 declare_class(Model)
 
 
@@ -432,9 +366,6 @@ declare_enum(Sampling)
     i_prop(X, Y, public, vec3f, joints1)     \
     i_prop(X, Y, public, vec3f, weights0)    \
     i_prop(X, Y, public, vec3f, weights1)
-#ifndef HumanVertex_intern
-#define HumanVertex_intern
-#endif
 declare_struct(HumanVertex)
 
 
