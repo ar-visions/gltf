@@ -142,7 +142,7 @@ u64 Accessor_vcount(Accessor a) {
         case CompoundType_MAT2:   vsize = 4; break;
         case CompoundType_MAT3:   vsize = 9; break;
         case CompoundType_MAT4:   vsize = 16; break;
-        default: fault("invalid CompoundType");
+        default: fault("invalid CompoundType2");
     }
     return vsize;
 };
@@ -169,7 +169,7 @@ AType Accessor_member_type(Accessor a) {
                 case CompoundType_SCALAR: return typeid(i8);
                 //case CompoundType_VEC2:   return typeid(vec2i8);
                 //case CompoundType_VEC3:   return typeid(vec3i8);
-                //case CompoundType_VEC4:   return typeid(vec4i8);
+                case CompoundType_VEC4:   return typeid(rgba8);
                 default: break;
             }
             break;
@@ -201,7 +201,7 @@ AType Accessor_member_type(Accessor a) {
         default:
             break;
     }
-    fault("invalid CompoundType: %o", e_str(CompoundType, a->type));
+    fault("invalid CompoundType1: %o", e_str(CompoundType, a->type));
     return 0;
 };
 

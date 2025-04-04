@@ -240,6 +240,7 @@ declare_class(TextureInfo)
 /// we transfer material properties from here, in order to create small 2x2 placeholder textures
 #define pbrMetallicRoughness_schema(X, Y,...) \
     /* Core PBR Properties */ \
+    i_prop  (X, Y, public, f32,         ior) \
     i_prop  (X, Y, public, vec4f,       baseColorFactor) \
     i_prop  (X, Y, public, TextureInfo, baseColorTexture) \
     i_prop  (X, Y, public, f32,         metallicFactor) \
@@ -274,7 +275,6 @@ declare_class(TextureInfo)
     i_prop  (X, Y, public, vec3f,       attenuationColor) \
     i_prop  (X, Y, public, f32,         attenuationDistance) \
     /* Index of Refraction (KHR_materials_ior) */ \
-    i_prop  (X, Y, public, f32,         ior) \
     /* Specular (KHR_materials_specular) */ \
     i_prop  (X, Y, public, TextureInfo, specularTexture) \
     i_prop  (X, Y, public, vec3f,       specularColorFactor) \
