@@ -58,13 +58,10 @@ app:
 ### 🔧 environment setup
 ```sh
 # the place where we install software, lib/include/bin/etc
-export IMPORT="/home/user/src/import"
+export TAPESTRY="/home/user/src/tapestry"
 
 # list of project names we wish to debug (any external library)
 export DBG="*,gltf,trinity,*"
-
-# our source directory where we have our own/external projects
-export SRC="/home/user/src"
 ```
 
 also useful to setup your SRC directory so import may look here and symlink rather than checkout git ... this A-type import pattern improves general software development practices for all libraries.
