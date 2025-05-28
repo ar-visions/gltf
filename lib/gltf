@@ -5,49 +5,49 @@
 #include <vec>
 
 
-#define ComponentType_schema(X,Y,...) \
-    enum_value_v(X,Y, NONE,           0) \
-    enum_value_v(X,Y, BYTE,           5120) \
-    enum_value_v(X,Y, UNSIGNED_BYTE,  5121) \
-    enum_value_v(X,Y, SHORT,          5122) \
-    enum_value_v(X,Y, UNSIGNED_SHORT, 5123) \
-    enum_value_v(X,Y, UNSIGNED_INT,   5125) \
-    enum_value_v(X,Y, FLOAT,          5126)
+#define ComponentType_schema(E,T,Y,...) \
+    enum_value_v(E,T,Y, NONE,           0) \
+    enum_value_v(E,T,Y, BYTE,           5120) \
+    enum_value_v(E,T,Y, UNSIGNED_BYTE,  5121) \
+    enum_value_v(E,T,Y, SHORT,          5122) \
+    enum_value_v(E,T,Y, UNSIGNED_SHORT, 5123) \
+    enum_value_v(E,T,Y, UNSIGNED_INT,   5125) \
+    enum_value_v(E,T,Y, FLOAT,          5126)
 declare_enum(ComponentType)
 
-#define CompoundType_schema(X,Y,...) \
-    enum_value_v(X,Y, NONE,           0) \
-    enum_value_v(X,Y, SCALAR,         1) \
-    enum_value_v(X,Y, VEC2,           2) \
-    enum_value_v(X,Y, VEC3,           3) \
-    enum_value_v(X,Y, VEC4,           4) \
-    enum_value_v(X,Y, MAT2,           5) \
-    enum_value_v(X,Y, MAT3,           6) \
-    enum_value_v(X,Y, MAT4,           7)
+#define CompoundType_schema(E,T,Y,...) \
+    enum_value_v(E,T,Y, NONE,           0) \
+    enum_value_v(E,T,Y, SCALAR,         1) \
+    enum_value_v(E,T,Y, VEC2,           2) \
+    enum_value_v(E,T,Y, VEC3,           3) \
+    enum_value_v(E,T,Y, VEC4,           4) \
+    enum_value_v(E,T,Y, MAT2,           5) \
+    enum_value_v(E,T,Y, MAT3,           6) \
+    enum_value_v(E,T,Y, MAT4,           7)
 declare_enum(CompoundType)
 
-#define TargetType_schema(X,Y,...) \
-    enum_value_v(X,Y, NONE,           0) \
-    enum_value_v(X,Y, ARRAY_BUFFER,   34962) \
-    enum_value_v(X,Y, ELEMENT_BUFFER, 34963)
+#define TargetType_schema(E,T,Y,...) \
+    enum_value_v(E,T,Y, NONE,           0) \
+    enum_value_v(E,T,Y, ARRAY_BUFFER,   34962) \
+    enum_value_v(E,T,Y, ELEMENT_BUFFER, 34963)
 declare_enum(TargetType)
 
 
-#define Mode_schema(X,Y,...) \
-    enum_value_v(X,Y, NONE,           0) \
-    enum_value_v(X,Y, LINES,          1) \
-    enum_value_v(X,Y, LINE_LOOP,      2) \
-    enum_value_v(X,Y, TRIANGLES,      4) \
-    enum_value_v(X,Y, TRIANGLE_STRIP, 5) \
-    enum_value_v(X,Y, TRIANGLE_FAN,   6) \
-    enum_value_v(X,Y, QUADS,          7)
+#define Mode_schema(E,T,Y,...) \
+    enum_value_v(E,T,Y, NONE,           0) \
+    enum_value_v(E,T,Y, LINES,          1) \
+    enum_value_v(E,T,Y, LINE_LOOP,      2) \
+    enum_value_v(E,T,Y, TRIANGLES,      4) \
+    enum_value_v(E,T,Y, TRIANGLE_STRIP, 5) \
+    enum_value_v(E,T,Y, TRIANGLE_FAN,   6) \
+    enum_value_v(E,T,Y, QUADS,          7)
 declare_enum(Mode)
 
 
-#define Interpolation_schema(X,Y,...) \
-    enum_value_v(X,Y, LINEAR,         0) \
-    enum_value_v(X,Y, STEP,           1) \
-    enum_value_v(X,Y, CUBICSPLINE,    2)
+#define Interpolation_schema(E,T,Y,...) \
+    enum_value_v(E,T,Y, LINEAR,         0) \
+    enum_value_v(E,T,Y, STEP,           1) \
+    enum_value_v(E,T,Y, CUBICSPLINE,    2)
 declare_enum(Interpolation)
 
 
@@ -323,34 +323,34 @@ declare_class(Material)
 declare_class(Model)
 
 
-#define Polygon_schema(X, Y,...) \
-    enum_value_v(X, Y, undefined, 0) \
-    enum_value_v(X, Y, tri, 1) \
-    enum_value_v(X, Y, quad, 2) \
-    enum_value_v(X, Y, wire, 3) \
-    enum_value_v(X, Y, mixed, 4) \
-    enum_value_v(X, Y, ngon, 5)
+#define Polygon_schema(E,T,Y,...) \
+    enum_value_v(E,T,Y, undefined, 0) \
+    enum_value_v(E,T,Y, tri, 1) \
+    enum_value_v(E,T,Y, quad, 2) \
+    enum_value_v(E,T,Y, wire, 3) \
+    enum_value_v(E,T,Y, mixed, 4) \
+    enum_value_v(E,T,Y, ngon, 5)
 declare_enum(Polygon)
 
 
-#define Asset_schema(X, Y,...) \
-    enum_value_v(X, Y, undefined, 0) \
-    enum_value_v(X, Y, color, 1) \
-    enum_value_v(X, Y, normal, 2) \
-    enum_value_v(X, Y, material, 3) \
-    enum_value_v(X, Y, reflect, 4) \
-    enum_value_v(X, Y, env, 5) \
-    enum_value_v(X, Y, attachment, 6) \
-    enum_value_v(X, Y, depth_stencil, 7) \
-    enum_value_v(X, Y, multisample, 8)
+#define Asset_schema(E,T,Y,...) \
+    enum_value_v(E,T,Y, undefined, 0) \
+    enum_value_v(E,T,Y, color, 1) \
+    enum_value_v(E,T,Y, normal, 2) \
+    enum_value_v(E,T,Y, material, 3) \
+    enum_value_v(E,T,Y, reflect, 4) \
+    enum_value_v(E,T,Y, env, 5) \
+    enum_value_v(E,T,Y, attachment, 6) \
+    enum_value_v(E,T,Y, depth_stencil, 7) \
+    enum_value_v(E,T,Y, multisample, 8)
 declare_enum(Asset)
 
 
-#define Sampling_schema(X, Y,...) \
-    enum_value_v(X, Y, undefined, 0) \
-    enum_value_v(X, Y, nearest, 1) \
-    enum_value_v(X, Y, linear, 2) \
-    enum_value_v(X, Y, ansio, 3)
+#define Sampling_schema(E,T,Y,...) \
+    enum_value_v(E,T,Y, undefined, 0) \
+    enum_value_v(E,T,Y, nearest, 1) \
+    enum_value_v(E,T,Y, linear, 2) \
+    enum_value_v(E,T,Y, ansio, 3)
 declare_enum(Sampling)
 
 
@@ -399,18 +399,18 @@ declare_struct(HumanVertex)
 #define array_Buffer_schema(X,Y,...)
 #define array_Animation_schema(X,Y,...)
 
-declare_meta(array_Transform,  array, Transform)
-declare_meta(array_Sampler,    array, Sampler)
-declare_meta(array_Channel,    array, Channel)
-declare_meta(array_Primitive,  array, Primitive)
-declare_meta(array_Node,       array, Node)
-declare_meta(array_Skin,       array, Skin)
-declare_meta(array_Accessor,   array, Accessor)
-declare_meta(array_BufferView, array, BufferView)
-declare_meta(array_Mesh,       array, Mesh)
-declare_meta(array_Scene,      array, Scene)
-declare_meta(array_Material,   array, Material)
-declare_meta(array_Buffer,     array, Buffer)
-declare_meta(array_Animation,  array, Animation)
+declare_class_2(array_Transform,  array, Transform)
+declare_class_2(array_Sampler,    array, Sampler)
+declare_class_2(array_Channel,    array, Channel)
+declare_class_2(array_Primitive,  array, Primitive)
+declare_class_2(array_Node,       array, Node)
+declare_class_2(array_Skin,       array, Skin)
+declare_class_2(array_Accessor,   array, Accessor)
+declare_class_2(array_BufferView, array, BufferView)
+declare_class_2(array_Mesh,       array, Mesh)
+declare_class_2(array_Scene,      array, Scene)
+declare_class_2(array_Material,   array, Material)
+declare_class_2(array_Buffer,     array, Buffer)
+declare_class_2(array_Animation,  array, Animation)
 
 #endif
