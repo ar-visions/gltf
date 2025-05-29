@@ -60,8 +60,8 @@ app:
 # the place where we install software, lib/include/bin/etc
 export TAPESTRY="/home/user/src/tapestry"
 
-# list of project names we wish to debug (any external library)
-export DBG="*,gltf,trinity,*"
+# debug only locally cloned source (your own, and what you clone to work on)
+export DBG="*"
 ```
 
 also useful to setup your SRC directory so import may look here and symlink rather than checkout git ... this A-type import pattern improves general software development practices for all libraries.
