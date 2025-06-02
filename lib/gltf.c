@@ -1,7 +1,9 @@
 #include <import>
 
+vector vector_with_path(vector a, path file_path);
+
 void Buffer_init(Buffer b) {
-    vector    data = vector(b->uri);
+    vector    data = vector_with_path(new(vector), b->uri);
     b->data = data;
 }
 
