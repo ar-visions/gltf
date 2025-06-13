@@ -156,7 +156,6 @@ declare_class(Transform)
 typedef struct _Model* Model;
 typedef struct _Primitive* Primitive;
 #define Node_schema(X, Y,...) \
-    i_prop(X, Y, public, array,             fields) \
     i_prop(X, Y, public, string,            name) \
     i_prop(X, Y, public, Node,              parent) \
     i_prop(X, Y, public, i32,               skin) \

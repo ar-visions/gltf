@@ -16,11 +16,11 @@ A-type based glTF schema and parser — designed to load `.gltf` files directly 
 int main(int argc, cstr argv[]) {
     A_start();
 
-    path gltf = path("models/orbiter.gltf");
+    path gltf = path("models/flower8888.gltf");
     Model orbiter = read(gltf, typeid(Model));
 }
 ```
-this loads `orbiter.gltf` into a fully resolved `Model` class with access to nodes, skins, meshes, materials, etc.
+this loads `flower8888.gltf` into a fully resolved `Model` class with access to nodes, skins, meshes, materials, etc.
 
 for more information, check out orbiter & trinity's use of this object; there we use a Vulkan subsystem to render this model.
 
