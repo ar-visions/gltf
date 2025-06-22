@@ -14,7 +14,7 @@ A-type based glTF schema and parser — designed to load `.gltf` files directly 
 #include <import>
 
 int main(int argc, cstr argv[]) {
-    A_start();
+    A_start(argv);
 
     path gltf = path("models/flower8888.gltf");
     Model orbiter = read(gltf, typeid(Model));
