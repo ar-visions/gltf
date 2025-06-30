@@ -179,7 +179,9 @@ AType Accessor_member_type(Accessor a) {
         case ComponentType_UNSIGNED_SHORT:
             switch (a->type) {
                 case CompoundType_SCALAR: return typeid(i16);
-                default: break;
+                case CompoundType_VEC4:   return typeid(rgba16);
+                default:
+                    break;
             }
             break;
         case ComponentType_UNSIGNED_INT:
