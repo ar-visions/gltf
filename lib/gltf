@@ -79,7 +79,7 @@ typedef struct _array_Sampler* array_Sampler;
 
 #define Animation_schema(X,Y,...) \
     i_prop(X,Y, public, string,         name) \
-    i_prop(X,Y, public, array_Sampler,  samplers)
+    i_prop(X,Y, public, array,          samplers, meta, Sampler)
 declare_class(Animation)
 
 
@@ -121,11 +121,10 @@ declare_class(Accessor)
     i_prop(X, Y, public, TargetType, target)
 declare_class(BufferView)
 
-typedef struct _array_Transform* array_Transform;
 
 #define Skin_schema(X, Y,...) \
     i_prop(X, Y, public, string, name) \
-    i_prop(X, Y, public, vector_i64, joints) \
+    i_prop(X, Y, public, vector, joints, meta, i64) \
     i_prop(X, Y, public, i32,    inverseBindMatrices) \
     i_prop(X, Y, public, object, extras) \
     i_prop(X, Y, public, object, extensions)
@@ -133,8 +132,8 @@ declare_class(Skin)
 
 
 #define JData_schema(X, Y,...) \
-    i_prop(X, Y, public, vector_mat4f,      states) \
-    i_prop(X, Y, public, array_Transform,   transforms) \
+    i_prop(X, Y, public, vector,            states,     meta, mat4f) \
+    i_prop(X, Y, public, array,             transforms, meta, Transform) \
     i_prop(X, Y, public, mat4f,             local)
 declare_class(JData)
 
@@ -146,7 +145,7 @@ declare_class(JData)
     i_prop(X, Y, public, mat4f,             local) \
     i_prop(X, Y, public, mat4f,             local_default) \
     i_prop(X, Y, public, i32,               iparent) \
-    i_prop(X, Y, public, vector_i64,        ichildren) \
+    i_prop(X, Y, public, vector,            ichildren, meta, i64) \
     i_method(X, Y, public, none, multiply,  mat4f) \
     i_method(X, Y, public, none, set,       mat4f) \
     i_method(X, Y, public, none, set_default) \
@@ -163,8 +162,8 @@ typedef struct _Primitive* Primitive;
     i_prop(X, Y, public, vec3f,             translation) \
     i_prop(X, Y, public, quatf,             rotation) \
     i_prop(X, Y, public, vec3f,             scale) \
-    i_prop(X, Y, public, vector_f32,        weights) \
-    i_prop(X, Y, public, vector_i64,        children) \
+    i_prop(X, Y, public, vector,            weights,  meta, f32) \
+    i_prop(X, Y, public, vector,            children, meta, i64) \
     i_prop(X, Y, public, i32,               joint_index) \
     i_prop(X, Y, public, bool,              processed) \
     i_prop(X, Y, public, object,            mx_joints) \
@@ -180,12 +179,12 @@ declare_class(Node)
     i_prop(X, Y, public, u64,               indices) \
     i_prop(X, Y, public, i32,               material) \
     i_prop(X, Y, public, Mode,              mode) \
-    i_prop(X, Y, public, array_map,         targets)
+    i_prop(X, Y, public, array,             targets, meta, map)
 declare_class(Primitive)
 
 
 #define MeshExtras_schema(X, Y,...) \
-    i_prop(X, Y, public, array_string,      target_names)
+    i_prop(X, Y, public, array,             target_names, meta, string)
 declare_class(MeshExtras)
 
 
@@ -193,7 +192,7 @@ typedef struct _array_Primitive* array_Primitive;
 
 #define Mesh_schema(X, Y,...) \
     i_prop(X, Y, public, string,            name) \
-    i_prop(X, Y, public, array_Primitive,   primitives) \
+    i_prop(X, Y, public, array,             primitives, meta, Primitive) \
     i_prop(X, Y, public, vector_f32,        weights) \
     i_prop(X, Y, public, MeshExtras,        extras) \
     i_method(X, Y, public, Primitive, primitive, cstr)
@@ -219,16 +218,6 @@ declare_class(AssetDesc)
     i_prop(X, Y, public, vector,            data) \
     i_override(X, Y, method, init)
 declare_class(Buffer)
-
-typedef struct _array_Node*          array_Node;
-typedef struct _array_Skin*          array_Skin;
-typedef struct _array_Accessor*      array_Accessor;
-typedef struct _array_BufferView*    array_BufferView;
-typedef struct _array_Mesh*          array_Mesh;
-typedef struct _array_Buffer*        array_Buffer;
-typedef struct _array_Animation*     array_Animation;
-typedef struct _array_Scene*         array_Scene;
-typedef struct _array_Material*      array_Material;
 
 #define TextureInfo_schema(X, Y,...) \
     i_prop  (X, Y, public, i64, index) \
@@ -303,15 +292,15 @@ declare_class(Material)
 
 
 #define Model_schema(X, Y,...) \
-    i_prop  (X, Y, public, array_Node,      nodes) \
-    i_prop  (X, Y, public, array_Skin,      skins) \
-    i_prop  (X, Y, public, array_Accessor,  accessors) \
-    i_prop  (X, Y, public, array_BufferView, bufferViews) \
-    i_prop  (X, Y, public, array_Mesh,      meshes) \
-    i_prop  (X, Y, public, array_Buffer,    buffers) \
-    i_prop  (X, Y, public, array_Animation, animations) \
-    i_prop  (X, Y, public, array_Scene,     scenes) \
-    i_prop  (X, Y, public, array_Material,  materials) \
+    i_prop  (X, Y, public, array,           nodes,       meta,  Node) \
+    i_prop  (X, Y, public, array,           skins,       meta,  Skin) \
+    i_prop  (X, Y, public, array,           accessors,   meta,  Accessor) \
+    i_prop  (X, Y, public, array,           bufferViews, meta,  BufferView) \
+    i_prop  (X, Y, public, array,           meshes,      meta,  Mesh) \
+    i_prop  (X, Y, public, array,           buffers,     meta,  Buffer) \
+    i_prop  (X, Y, public, array,           animations,  meta,  Animation) \
+    i_prop  (X, Y, public, array,           scenes,      meta,  Scene) \
+    i_prop  (X, Y, public, array,           materials,   meta,  Material) \
     i_prop  (X, Y, public, u64,             scene) \
     i_prop  (X, Y, public, AssetDesc,       asset) \
     i_method(X, Y, public, Transform,       node_transform, JData, mat4f, i32, Transform) \
@@ -366,50 +355,5 @@ declare_enum(Sampling)
     i_prop(X, Y, public, vec3f, weights0)    \
     i_prop(X, Y, public, vec3f, weights1)
 declare_struct(HumanVertex)
-
-
-/*
-#define Transform_schema(X,Y,...)
-#define Sampler_schema(X,Y,...)
-#define Channel_schema(X,Y,...)
-#define Primitive_schema(X,Y,...)
-#define Node_schema(X,Y,...)
-#define Skin_schema(X,Y,...)
-#define Accessor_schema(X,Y,...)
-#define BufferView_schema(X,Y,...)
-#define Mesh_schema(X,Y,...)
-#define Scene_schema(X,Y,...)
-#define Material_schema(X,Y,...)
-#define Buffer_schema(X,Y,...)
-#define Animation_schema(X,Y,...)
-*/
-
-#define array_Transform_schema(X,Y,...)
-#define array_Sampler_schema(X,Y,...)
-#define array_Channel_schema(X,Y,...)
-#define array_Primitive_schema(X,Y,...)
-#define array_Node_schema(X,Y,...)
-#define array_Skin_schema(X,Y,...)
-#define array_Accessor_schema(X,Y,...)
-#define array_BufferView_schema(X,Y,...)
-#define array_Mesh_schema(X,Y,...)
-#define array_Scene_schema(X,Y,...)
-#define array_Material_schema(X,Y,...)
-#define array_Buffer_schema(X,Y,...)
-#define array_Animation_schema(X,Y,...)
-
-declare_class_2(array_Transform,  array, Transform)
-declare_class_2(array_Sampler,    array, Sampler)
-declare_class_2(array_Channel,    array, Channel)
-declare_class_2(array_Primitive,  array, Primitive)
-declare_class_2(array_Node,       array, Node)
-declare_class_2(array_Skin,       array, Skin)
-declare_class_2(array_Accessor,   array, Accessor)
-declare_class_2(array_BufferView, array, BufferView)
-declare_class_2(array_Mesh,       array, Mesh)
-declare_class_2(array_Scene,      array, Scene)
-declare_class_2(array_Material,   array, Material)
-declare_class_2(array_Buffer,     array, Buffer)
-declare_class_2(array_Animation,  array, Animation)
 
 #endif

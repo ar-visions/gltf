@@ -102,8 +102,8 @@ JData Model_joints(Model a, Node node) {
             ((Node)a->nodes->elements[node_index])->joint_index = j_index++;
 
         int n = len(skin->joints);
-        joints->transforms = array_with_i32(new(array_Transform), n); /// we are appending, so dont set size (just verify)
-        joints->states     = vector_with_i32(new(vector_mat4f), n);
+        joints->transforms = array(n); /// we are appending, so dont set size (just verify)
+        joints->states     = vector(n);
         
         for (int i = 0; i < n; i++)
             push(joints->states, &ident);
@@ -211,17 +211,17 @@ AType Accessor_member_type(Accessor a) {
 
 void Transform_multiply(Transform a, mat4f m) {
     a->local = mat4f_mul(&a->local, &m);
-    propagate(a);
+    Transform_propagate(a);
 }
 
 void Transform_set(Transform a, mat4f m) {
     a->local = m;
-    propagate(a);
+    Transform_propagate(a);
 }
 
 void Transform_set_default(Transform a) {
     a->local = a->local_default;
-    propagate(a);
+    Transform_propagate(a);
 }
 
 void Transform_operator__assign_mul(Transform a, mat4f m) {
@@ -238,7 +238,7 @@ void Transform_propagate(Transform a) {
     mat4f* jstates = data(a->jdata->states);
     jstates[a->istate] = mat4f_mul(&m, &a->local);
     each (a->ichildren, i64*, i)
-        propagate(a->jdata->transforms->elements[*i]);
+        Transform_propagate(a->jdata->transforms->elements[*i]);
 }
 
 Primitive Node_primitive(Node a, Model mdl, cstr name) {
@@ -284,17 +284,3 @@ define_class(Model,         A)
 define_class(pbrMetallicRoughness, A)
 define_class(TextureInfo, A)
 define_class(Material, A)
-
-define_class(array_Transform,  array, Transform)
-define_class(array_Sampler,    array, Sampler)
-define_class(array_Channel,    array, Channel)
-define_class(array_Primitive,  array, Primitive)
-define_class(array_Node,       array, Node)
-define_class(array_Skin,       array, Skin)
-define_class(array_Accessor,   array, Accessor)
-define_class(array_BufferView, array, BufferView)
-define_class(array_Mesh,       array, Mesh)
-define_class(array_Scene,      array, Scene)
-define_class(array_Material,   array, Material)
-define_class(array_Buffer,     array, Buffer)
-define_class(array_Animation,  array, Animation)
